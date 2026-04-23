@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pro Dashboard</title>
+<title>Advanced Dashboard</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 * {
@@ -20,22 +21,13 @@ body {
   height: 100vh;
   background: #020617;
   color: white;
-  transition: 0.3s;
-}
-
-/* LIGHT MODE */
-.light {
-  background: #f1f5f9;
-  color: black;
 }
 
 /* SIDEBAR */
 .sidebar {
   width: 250px;
   background: rgba(255,255,255,0.05);
-  backdrop-filter: blur(15px);
   padding: 20px;
-  transition: 0.3s;
 }
 
 .sidebar a {
@@ -43,15 +35,6 @@ body {
   margin: 15px 0;
   color: #94a3b8;
   text-decoration: none;
-}
-
-.sidebar a:hover {
-  color: #22d3ee;
-}
-
-/* MOBILE SIDEBAR */
-.hidden {
-  display: none;
 }
 
 /* MAIN */
@@ -67,12 +50,15 @@ body {
   align-items: center;
 }
 
-/* BUTTONS */
-button {
-  padding: 8px 15px;
-  border: none;
+/* NOTIFICATION */
+.notify-box {
+  position: absolute;
+  right: 20px;
+  top: 60px;
+  background: #111827;
+  padding: 15px;
   border-radius: 10px;
-  cursor: pointer;
+  display: none;
 }
 
 /* CARDS */
@@ -87,97 +73,97 @@ button {
   background: rgba(255,255,255,0.05);
   padding: 20px;
   border-radius: 15px;
-  transition: 0.3s;
 }
 
-.card:hover {
-  transform: translateY(-10px);
-}
-
-/* SEARCH */
-.search {
-  padding: 8px;
-  border-radius: 10px;
-  border: none;
-}
-
-/* MOBILE */
-@media(max-width: 768px) {
-  .sidebar {
-    position: absolute;
-    height: 100%;
-    z-index: 10;
-  }
+/* CHART */
+.chart-box {
+  margin-top: 30px;
+  background: rgba(255,255,255,0.05);
+  padding: 20px;
+  border-radius: 15px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="sidebar" class="sidebar">
+<div class="sidebar">
   <h2>⚡ Dashboard</h2>
   <a href="#">Home</a>
   <a href="#">Analytics</a>
-  <a href="#">Users</a>
 </div>
 
 <div class="main">
 
   <div class="header">
-    <button onclick="toggleSidebar()">☰</button>
-
-    <input class="search" placeholder="Search...">
-
+    <h2>Dashboard</h2>
     <div>
-      🔔
-      <button onclick="toggleTheme()">🌙</button>
+      <button onclick="toggleNotify()">🔔</button>
     </div>
+  </div>
+
+  <div id="notify" class="notify-box">
+    <p>New user signed up</p>
+    <p>Server updated</p>
   </div>
 
   <div class="cards">
     <div class="card">
       <h3>Users</h3>
-      <p id="users">0</p>
+      <p id="users">1200</p>
     </div>
-
     <div class="card">
       <h3>Revenue</h3>
-      <p id="revenue">$0</p>
+      <p id="revenue">$5400</p>
     </div>
+  </div>
 
-    <div class="card">
-      <h3>Growth</h3>
-      <p id="growth">0%</p>
-    </div>
+  <div class="chart-box">
+    <canvas id="chart"></canvas>
   </div>
 
 </div>
 
 <script>
-// SIDEBAR TOGGLE
-function toggleSidebar() {
-  document.getElementById("sidebar").classList.toggle("hidden");
+// NOTIFICATION TOGGLE
+function toggleNotify() {
+  let box = document.getElementById("notify");
+  box.style.display = box.style.display === "block" ? "none" : "block";
 }
 
-// DARK MODE
-function toggleTheme() {
-  document.body.classList.toggle("light");
-}
+// LOCAL STORAGE DATA
+let users = localStorage.getItem("users") || 1200;
+let revenue = localStorage.getItem("revenue") || 5400;
 
-// LIVE DATA SIMULATION
-let users = 1000;
-let revenue = 5000;
-let growth = 20;
+document.getElementById("users").innerText = users;
+document.getElementById("revenue").innerText = "$" + revenue;
 
+// UPDATE DATA
 setInterval(() => {
-  users += Math.floor(Math.random() * 10);
-  revenue += Math.floor(Math.random() * 100);
-  growth += Math.random();
+  users++;
+  revenue += 50;
+
+  localStorage.setItem("users", users);
+  localStorage.setItem("revenue", revenue);
 
   document.getElementById("users").innerText = users;
   document.getElementById("revenue").innerText = "$" + revenue;
-  document.getElementById("growth").innerText = growth.toFixed(1) + "%";
-}, 2000);
+}, 3000);
+
+// CHART
+const ctx = document.getElementById('chart');
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+    datasets: [{
+      label: 'Users Growth',
+      data: [10, 20, 30, 25, 40, 50, 60],
+      borderWidth: 2
+    }]
+  }
+});
 </script>
 
 </body>
