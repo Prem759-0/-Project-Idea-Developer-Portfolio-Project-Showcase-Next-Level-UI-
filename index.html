@@ -3,77 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dev Portfolio</title>
+<title>Futuristic Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Orbitron', sans-serif;
 }
 
 body {
-  background: #0f172a;
+  display: flex;
+  height: 100vh;
+  background: #020617;
   color: white;
-  scroll-behavior: smooth;
 }
 
-/* NAV */
-nav {
-  position: fixed;
-  width: 100%;
+/* SIDEBAR */
+.sidebar {
+  width: 250px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(15px);
+  padding: 20px;
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+}
+
+.sidebar a {
+  display: block;
+  margin: 15px 0;
+  color: #94a3b8;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #22d3ee;
+}
+
+/* MAIN */
+.main {
+  flex: 1;
+  padding: 30px;
+}
+
+/* HEADER */
+.header {
   display: flex;
   justify-content: space-between;
-  padding: 20px 50px;
-  backdrop-filter: blur(12px);
-  background: rgba(0,0,0,0.3);
-  z-index: 1000;
+  margin-bottom: 30px;
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-}
-
-/* HERO */
-.hero {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-}
-
-.hero h1 {
-  font-size: 3rem;
-  background: linear-gradient(90deg, #22d3ee, #6366f1);
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-.hero p {
-  margin-top: 20px;
-  color: #94a3b8;
-}
-
-/* PROJECTS */
-.projects {
-  padding: 80px 40px;
-}
-
-.projects h2 {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.project-grid {
+/* CARDS */
+.cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
 }
 
@@ -82,49 +71,26 @@ nav a {
   padding: 20px;
   border-radius: 15px;
   transition: 0.3s;
+  position: relative;
 }
 
 .card:hover {
   transform: translateY(-10px);
-  background: rgba(255,255,255,0.1);
+  box-shadow: 0 0 20px #22d3ee;
 }
 
-/* SKILLS */
-.skills {
-  padding: 80px 40px;
-}
-
-.skill {
-  margin-bottom: 20px;
-}
-
-.bar {
-  height: 10px;
-  background: #1e293b;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.fill {
-  height: 100%;
-  background: linear-gradient(90deg, #22d3ee, #6366f1);
-}
-
-/* FOOTER */
-footer {
-  text-align: center;
-  padding: 40px;
-  color: #94a3b8;
+/* CHART PLACEHOLDER */
+.chart {
+  margin-top: 30px;
+  height: 250px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 15px;
 }
 
 /* MOBILE */
-@media(max-width: 600px) {
-  nav {
-    padding: 20px;
-  }
-
-  .hero h1 {
-    font-size: 2rem;
+@media(max-width: 768px) {
+  .sidebar {
+    display: none;
   }
 }
 </style>
@@ -132,60 +98,41 @@ footer {
 
 <body>
 
-<nav>
-  <h2>MyPortfolio</h2>
-  <div>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
+<div class="sidebar">
+  <h2>⚡ Dashboard</h2>
+  <a href="#">Home</a>
+  <a href="#">Analytics</a>
+  <a href="#">Users</a>
+  <a href="#">Settings</a>
+</div>
+
+<div class="main">
+
+  <div class="header">
+    <h1>Overview</h1>
+    <p>User: Admin</p>
   </div>
-</nav>
 
-<section class="hero">
-  <h1>Hello, I'm a Full Stack Developer</h1>
-  <p>I build modern, scalable web applications.</p>
-</section>
-
-<section id="projects" class="projects">
-  <h2>Projects</h2>
-  <div class="project-grid">
+  <div class="cards">
     <div class="card">
-      <h3>Spotify Clone</h3>
-      <p>Full-stack music streaming app.</p>
+      <h3>Users</h3>
+      <p>1,245</p>
     </div>
+
     <div class="card">
-      <h3>AI SaaS Builder</h3>
-      <p>Generate websites using AI.</p>
+      <h3>Revenue</h3>
+      <p>$8,540</p>
     </div>
+
     <div class="card">
-      <h3>Chat App</h3>
-      <p>Realtime messaging system.</p>
+      <h3>Growth</h3>
+      <p>+23%</p>
     </div>
   </div>
-</section>
 
-<section id="skills" class="skills">
-  <h2>Skills</h2>
+  <div class="chart"></div>
 
-  <div class="skill">
-    <p>HTML</p>
-    <div class="bar"><div class="fill" style="width:90%"></div></div>
-  </div>
-
-  <div class="skill">
-    <p>CSS</p>
-    <div class="bar"><div class="fill" style="width:85%"></div></div>
-  </div>
-
-  <div class="skill">
-    <p>JavaScript</p>
-    <div class="bar"><div class="fill" style="width:75%"></div></div>
-  </div>
-
-</section>
-
-<footer>
-  <p>© 2026 Your Name</p>
-</footer>
+</div>
 
 </body>
 </html>
